@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket 示例</title>
+    <script>
+        var ws = new WebSocket("ws://192.168.73.100:8765/echo");
+
+        ws.onmessage = function(event) {
+            var message = event.data;
+            displayMessage(message); // Call function to display message on the page
+        };
+
+        function displayMessage(message) {
+            var messageElement = document.createElement('p');
+            messageElement.textContent = "来自服务器的消息：" + message;
+            document.body.appendChild(messageElement);
+        }
+    </script>
+</head>
+<body>
+    <h1>WebSocket 客户端</h1>
+    <p>来自服务器的消息将显示在这里：</p>
+</body>
+</html>

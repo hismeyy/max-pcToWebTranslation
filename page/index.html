@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>翻译</title>
+    <link rel="stylesheet" href="../static/vendor/bootstrap/bootstrap.min.css">
+    <script src="../static/vendor/bootstrap/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <input id="inputText" type="text" class="form-control" placeholder="请输入一段话">
+                <div class="input-group-append">
+                    <button id="sendButton" class="btn btn-primary" type="button">发送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to handle sending
+    function sendText() {
+        // Placeholder for actual sending logic (not implemented in this example)
+        console.log("发送成功");
+    }
+
+    // Bind click event to send button
+    document.getElementById("sendButton").addEventListener("click", function () {
+        sendText();
+    });
+</script>
+
+</body>
+</html>
