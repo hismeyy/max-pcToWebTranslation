@@ -40,6 +40,10 @@ class Web:
             self.server.serve_forever()
         except Exception as e:
             logging.error(f"发生错误：{e}")
+        finally:
+            if self.server:
+                self.server.stop()
+                logging.info("服务器已停止")
 
     def start_server(self):
         self.server_thread = threading.Thread(target=self.run_server)
@@ -49,10 +53,19 @@ class Web:
 
     def stop_server(self):
         if self.server:
-            self.server.stop()
+            try:
+                self.server.stop()
+                logging.info("服务器正在停止")
+            except Exception as e:
+                logging.error(f"停止服务器时发生错误：{e}")
+        else:
+            logging.warning("服务器未启动或已停止")
+
         if self.server_thread:
             self.server_thread.join()
             logging.info("Web 停止成功")
+        else:
+            logging.warning("服务器线程未启动或已停止")
 
 
 if __name__ == "__main__":
