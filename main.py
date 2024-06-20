@@ -3,50 +3,9 @@ import os
 import threading
 
 import websockets
-from flask import Flask, render_template
-from flask_cors import CORS
-from flask_sockets import Sockets
 
 import Win
-
-app = Flask(__name__)
-server = None
-sockets = Sockets(app)
-CORS(app)
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-# WebSocket 处理程序，用于接收消息
-@sockets.route('/echo')
-def echo_socket(ws):
-    while not ws.closed:
-        message = ws.receive()
-        print(f"从服务器接收到的消息：{message}")
-
-
-def run_server():
-    global server
-    from gevent import pywsgi
-    from geventwebsocket.handler import WebSocketHandler
-    server = pywsgi.WSGIServer(('0.0.0.0', 5000), app, handler_class=WebSocketHandler)
-    print("服务启动成功")
-    server.serve_forever()
-
-
-# 启动服务器的函数
-def start_server():
-    server_thread = threading.Thread(target=run_server)
-    server_thread.start()
-
-
-# 停止服务器的函数
-def stop_server():
-    global server
-    server.stop()
+import Web
 
 
 # 定义发送消息给客户端的函数
@@ -78,8 +37,9 @@ if __name__ == '__main__':
     thread = threading.Thread(target=start_server_in_thread)
     thread.start()
 
-    # 创建并启动 Flask 线程
-    start_server()
+    # 创建并启动Web线程
+    web = Web(port=5000)
+    web.start_server()
 
     # 主线程创建桌面窗口
     # 构建HTML文件的路径
@@ -89,4 +49,4 @@ if __name__ == '__main__':
     win = Win("翻译", 900, 600, url)
     win.start_pc_win()
 
-    stop_server()
+    web.stop_server()
