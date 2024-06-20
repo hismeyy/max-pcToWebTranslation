@@ -20,4 +20,5 @@ if __name__ == '__main__':
     win = Win("翻译", 900, 600, url)
     win.start_pc_win()
 
+    server.stop_server()
     web.stop_server()
