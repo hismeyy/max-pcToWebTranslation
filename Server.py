@@ -1,7 +1,8 @@
 import asyncio
-import threading
-import websockets
 import json
+import threading
+
+import websockets
 
 
 class Server:

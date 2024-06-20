@@ -10,11 +10,12 @@ from geventwebsocket.handler import WebSocketHandler
 class Web:
     def __init__(self, port):
         self.port = port
-        self.app = Flask(__name__)
+        self.app = Flask(__name__, template_folder='templates')
         self.sockets = Sockets(self.app)
         CORS(self.app)
         self.server = None
         self.server_thread = None
+        self.define_routes()
 
     def define_routes(self):
         @self.app.route('/')
@@ -25,12 +26,14 @@ class Web:
         def echo_socket(ws):
             while not ws.closed:
                 message = ws.receive()
-                print(f"从服务器接收到的消息：{message}")
-                ws.send(f"服务器响应：{message}")
+                if message:
+                    print(f"从服务器接收到的消息：{message}")
+                    ws.send(f"服务器响应：{message}")
 
     def run_server(self):
         self.server = pywsgi.WSGIServer(('0.0.0.0', self.port), self.app, handler_class=WebSocketHandler)
         try:
+            print(f"Starting server on port {self.port}")  # 调试输出
             self.server.serve_forever()
         except Exception as e:
             print(f"Error occurred: {e}")
@@ -52,8 +55,6 @@ class Web:
 # 测试用例
 if __name__ == "__main__":
     web = Web(port=5000)
-    try:
-        web.start_server()
-        # 假设这里有其他逻辑
-    except KeyboardInterrupt:
-        web.stop_server()
+    web.start_server()
+    input("Press Enter to stop the server...\n")  # Keep the server running
+    web.stop_server()

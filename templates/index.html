@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebSocket 示例</title>
     <script>
-        var ws = new WebSocket("ws://192.168.73.100:8765/echo");
+        var ws = new WebSocket("ws://127.0.0.1:8765/echo");
 
         ws.onmessage = function(event) {
             var message = event.data;

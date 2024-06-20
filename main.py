@@ -7,6 +7,7 @@ from Win import Win
 if __name__ == '__main__':
     # 启动Server线程
     server = Server(port=8765)
+    server.start_server()
     # 创建并启动Web线程
     web = Web(port=5000)
     web.start_server()
