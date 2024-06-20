@@ -3,24 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket 示例</title>
-    <script>
-        var ws = new WebSocket("ws://127.0.0.1:8765/echo");
-
-        ws.onmessage = function(event) {
-            var message = event.data;
-            displayMessage(message); // Call function to display message on the page
-        };
-
-        function displayMessage(message) {
-            var messageElement = document.createElement('p');
-            messageElement.textContent = "来自服务器的消息：" + message;
-            document.body.appendChild(messageElement);
+    <title>翻译</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #aee3ea; /* 浅蓝色背景 */
+            position: relative;
         }
-    </script>
+
+        #textContainer {
+            text-align: center;
+        }
+
+        #text {
+            font-size: 6vw; /* 使用vw单位根据视口宽度动态调整字体大小 */
+            font-weight: bold;
+            color: white;
+        }
+
+        #fullscreenButton {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 10px;
+            background-color: #72b2ef;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>WebSocket 客户端</h1>
-    <p>来自服务器的消息将显示在这里：</p>
+<div id="textContainer">
+    <div id="text"></div>
+</div>
+<button id="fullscreenButton">全屏显示</button>
+<script>
+    // 获取主机名（不包括端口号）
+    const hostname = window.location.hostname;
+
+    // 使用wss连接WebSocket以确保安全性
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    const ws = new WebSocket(`${wsProtocol}://${hostname}:8765/echo`);
+
+    ws.onmessage = function (event) {
+        const message = event.data;
+        displayMessage(message); // 调用函数在页面上显示消息
+    };
+
+    ws.onerror = function (error) {
+        console.error('WebSocket Error:', error);
+    };
+
+    ws.onclose = function () {
+        console.log('WebSocket connection closed');
+    };
+
+    let msg
+
+    function speak(text) {
+        console.log(text)
+        if (text) {
+            msg = new SpeechSynthesisUtterance();
+            msg.text = text;
+            msg.rate = 1;
+            msg.pitch = 1;
+            msg.volume = 1;
+            window.speechSynthesis.speak(msg);
+        } else {
+            alert("Please enter a word to speak.");
+        }
+    }
+
+    function stopSpeaking() {
+        window.speechSynthesis.cancel();
+    }
+
+    function displayMessage(message) {
+        const textElement = document.getElementById('text');
+        textElement.innerText = message;
+        // speak(message)
+    }
+
+    const fullscreenButton = document.getElementById('fullscreenButton');
+
+    fullscreenButton.addEventListener('click', () => {
+        // speak(fullscreenButton.innerText)
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch((err) => {
+                alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    });
+</script>
 </body>
 </html>
