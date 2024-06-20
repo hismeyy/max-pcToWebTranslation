@@ -3,19 +3,16 @@ import os
 import threading
 
 import websockets
-import webview
 from flask import Flask, render_template
-from flask_sockets import Sockets
 from flask_cors import CORS
+from flask_sockets import Sockets
+
+import Win
 
 app = Flask(__name__)
 server = None
 sockets = Sockets(app)
 CORS(app)
-
-
-class Api:
-    pass
 
 
 @app.route('/')
@@ -84,15 +81,12 @@ if __name__ == '__main__':
     # 创建并启动 Flask 线程
     start_server()
 
-    # 初始化API和webview窗口
-    api = Api()
-
+    # 主线程创建桌面窗口
     # 构建HTML文件的路径
     html_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'page/index.html')
     url = 'file://' + html_file_path
 
-    # 在主线程中启动 webview
-    win = webview.create_window('翻译', url=url, js_api=api, width=900, height=600)
+    win = Win("翻译", 900, 600, url)
+    win.start_pc_win()
 
-    webview.start(debug=True)
     stop_server()
