@@ -6,33 +6,48 @@
     <title>翻译</title>
     <link rel="stylesheet" href="../static/vendor/bootstrap/bootstrap.min.css">
     <script src="../static/vendor/bootstrap/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .welcome-header {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .welcome-footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #6c757d;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="input-group mb-3">
-                <input id="inputText" type="text" class="form-control" placeholder="请输入一段话">
-                <div class="input-group-append">
-                    <button id="sendButton" class="btn btn-primary" type="button">发送</button>
-                </div>
-            </div>
+<div class="container">
+    <!-- Header -->
+    <div class="row">
+        <div class="col-12 welcome-header">
+            <h1>欢迎使用Max手机翻译</h1>
+            <p>请使用可以进行局域网互联的IP地址</p>
+            <p>手机访问：http://ip:5000，访问后会显示连接成功</p>
+            <p>如果连接失败，请查看网络与手机网络是否在同一个局域网中</p>
+            <p>选择需要翻译的英文 快速按2次 ctrl+c</p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12 welcome-footer">
+            <p>&copy; 2024 Max手机翻译工具. 版权所有.</p>
+            <p>v1.0.0</p>
         </div>
     </div>
 </div>
 
 <script>
-    // Function to handle sending
-    function sendText() {
-        // Placeholder for actual sending logic (not implemented in this example)
-        console.log("发送成功");
-    }
 
-    // Bind click event to send button
-    document.getElementById("sendButton").addEventListener("click", function () {
-        sendText();
-    });
 </script>
 
 </body>

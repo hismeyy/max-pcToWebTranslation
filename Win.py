@@ -21,12 +21,13 @@ class Win:
                 url=self.win_url,
                 js_api=self.api,
                 width=self.win_width,
-                height=self.win_height
+                height=self.win_height,
+                resizable=False
             )
             print(f"日志：PC窗口 '{self.win_name}' 启动成功")
-            webview.start(debug=True)
+            # webview.start(debug=True)
             # 如果不需要调试模式，可以使用下面的代码
-            # webview.start()
+            webview.start()
         except Exception as e:
             print(f"错误：{e}")
 

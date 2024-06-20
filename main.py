@@ -17,7 +17,7 @@ if __name__ == '__main__':
     html_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'page/index.html')
     url = 'file://' + html_file_path
 
-    win = Win("翻译", 900, 600, url)
+    win = Win("Max手机翻译", 600, 500, url)
     win.start_pc_win()
 
     server.stop_server()
