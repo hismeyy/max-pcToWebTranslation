@@ -8,6 +8,8 @@ import keyboard
 import pyperclip
 import websockets
 
+from Translation import translate_zh
+
 logging.basicConfig(level=logging.INFO)
 
 
@@ -35,10 +37,14 @@ class Server:
     async def send_message(self, websocket, path):
         initial_message = "连接成功"
         await websocket.send(initial_message)
+        await asyncio.sleep(2)
         while self.seed:
             try:
                 message = self.message_stack.get_nowait()  # 使用get_nowait方法获取队列内容
-                await websocket.send(message)
+                await websocket.send("等待翻译...")
+                trans = translate_zh(message)
+
+                await websocket.send(trans)
                 logging.info(f"已发送消息到客户端：{message}")
             except queue.Empty:
                 await asyncio.sleep(0.1)  # 等待一段时间再次尝试获取队列内容
